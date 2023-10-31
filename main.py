@@ -1,12 +1,14 @@
+import os
 import tkinter
 from classes.master import master
 from classes.client import client
 from classes.service import service
 from pymongo.mongo_client import MongoClient
+from dotenv import load_dotenv
 
 
-uri = "mongodb+srv://vadimkbondarchuk:RKpLSaFCXgZ0A1uV@classes.zfqimdn.mongodb.net/?retryWrites=true&w=majority"
-db = MongoClient(uri)
+load_dotenv()
+db = MongoClient(os.getenv("MONGO_URI"))
 
 try:
     db.admin.command('ping')
@@ -18,5 +20,12 @@ dblist = db.list_database_names()
 if 'classes_db' in dblist:
     print('db exists')
 else:
-    collection = db["classes_db"]["classes_collection"]
+    masters = db["classes_db"]["classes_collection"]
+    clients = db["classes_db"]["classes_collection"]
+    services = db["classes_db"]["classes_collection"]
+
+while True:
+    inp = input("Select\n")
+    if inp == 'q':
+        break
 
