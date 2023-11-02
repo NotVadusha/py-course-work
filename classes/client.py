@@ -3,6 +3,15 @@ from classes.user import user
 
 
 class client(user):
-    def __init__(self, full_name_input, point_name_input, phone_num_input, service):
-        super().__init__(full_name_input, point_name_input, phone_num_input)
-        self.service_id = service.get_id()
+    def __init__(self, full_name_input, point_name_input, phone_num_input, service, def_id=uuid.uuid4()):
+        super().__init__(full_name_input, point_name_input, phone_num_input, def_id)
+        # self.service_id = service.get_id()
+
+    def to_dict(self):
+        return {
+            "_id": self.id,
+            "fullname": self.full_name,
+            "point_name": self.point_name,
+            "phone_num": self.phone_num,
+            "service_id": self.service_id,
+        }
