@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 from views.services_list import *
 from views.clients_list import *
 from views.masters_list import *
+import datetime
+from views.class_info_window import show_obj_info_window
 
 
 load_dotenv()
@@ -33,24 +35,44 @@ mainWindow.configure(bg='#CCCCCC')
 
 set_masters_block(mainWindow)
 set_clients_block(mainWindow)
-set_services_block(mainWindow)
-cal = Calendar(mainWindow, selectmode='day', year=2020, month=5, day=22, x=100, y=100)
+set_services_block(mainWindow, services)
+cal = Calendar(mainWindow, selectmode='day', year=2020, month=5, day=22)
 cal.pack()
-
-
-def get_most_expensive_service(x):
-    tkinter.messagebox.showinfo("abc", x)
+cal.place(x=10, y=350)
 
 
 def get_clients_for_date():
-    tkinter.messagebox.showinfo("abc", "ABC")
+    tkinter.messagebox.showinfo("abc", cal.get_date())
+    clients_via_date = []
+    for client_obj in clients.find({"service_appointed_to": cal.get_date()}):
+        clients_via_date.append(client(*client_obj))
+    list_via_date_window = create_new_window("")
+    create_scroll_list(list_via_date_window, [], 0, 0, client.get_fname)
 
 
+def get_most_expensive_service():
+    tkinter.messagebox.showinfo("abc", "cal.get_date()")
+
+
+# "Right now, average service cost is " +
 def get_average_service_cost():
-    tkinter.messagebox.showinfo("abc", "ABC")
+    x = services.aggregate(
+    [{'$group': {
+        "_id": "$service_name",
+        'avg_cost': {'$avg': '$service_cost'}
+    }}])
+    print(x["avg_cost"])
+    tkinter.messagebox.showinfo("Average service", "1")
 
 
-create_button(mainWindow, lambda x=1: get_most_expensive_service(x), 25, "Calibri", "Get clients for selected date", 10, 450)
+a = master("1", "2", "3", "4", "5")
+c = service("1", "2", "3", "4")
+b = client("1", "2", "3", c)
+
+show_obj_info_window(a)
+show_obj_info_window(b)
+show_obj_info_window(c)
+create_button(mainWindow, get_clients_for_date, 25, "Calibri", "Get clients for selected date", 30, 550)
 create_button(mainWindow, get_most_expensive_service, 25, "Calibri", "Get most expensive service", 300, 450)
 create_button(mainWindow, get_average_service_cost, 20, "Calibri", "Get average service cost", 600, 450)
 

@@ -5,7 +5,7 @@ from classes.user import user
 class client(user):
     def __init__(self, full_name_input, point_name_input, phone_num_input, service, def_id=uuid.uuid4()):
         super().__init__(full_name_input, point_name_input, phone_num_input, def_id)
-        # self.service_id = service.get_id()
+        self.service_id = service.get_id()
 
     def to_dict(self):
         return {
@@ -15,3 +15,4 @@ class client(user):
             "phone_num": self.phone_num,
             "service_id": self.service_id,
         }
+
