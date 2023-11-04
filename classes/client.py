@@ -16,3 +16,9 @@ class client(user):
             "service_id": self.service_id,
         }
 
+    def to_formatted_string(self):
+        return f'Client:\
+            \nName: {self.full_name}\
+            \nPhone: {self.phone_num}\
+            \nPoint: $ {self.point_name}\
+            \nService ID: {self.service_id}'

@@ -17,3 +17,11 @@ class master(user):
             "phone_num": self.phone_num,
             "specialization": self.specialization,
         }
+
+    def to_formatted_string(self):
+        return f'Master:\
+            \nName: {self.full_name} \
+            \nPhone: {self.phone_num} \
+            \nPoint: $ {self.point_name} \
+            \n Address: {self.address} \
+           \nSpecialization: {self.specialization}'

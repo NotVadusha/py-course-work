@@ -5,20 +5,12 @@ from UI_primitives import *
 
 
 def show_obj_info_window(obj: service | client | master):
-    info_window = create_new_window("500x500")
-    object_props = obj.to_dict()
+    info_window = create_new_window("400x300")
 
-    x = 10
-    y = 50
-    i=0
-    abc = []
-    abc.append(create_label(info_window, {object_props.keys()[0]}, x, y, 's'))
+    obj_txt_info=obj.to_formatted_string()
+    label = Label(info_window, text=obj_txt_info, font='Arial 12', fg='#000000', width=30, height=6)
+    label.pack()
+    label.place(x=50, y=10)
 
-    for prop in object_props.keys():
-        print(prop, i)
-        i+=1
-        x += 50
-        print(x)
-    return obj.to_dict()
-
+    create_button(info_window, info_window.destroy, 14, "Calibri", "Exit", 145, 200)
 

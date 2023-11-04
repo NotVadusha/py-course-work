@@ -23,3 +23,11 @@ class service:
             "service_cost": self.cost,
             "service_appointed_to": self.appointed_to,
         }
+
+    def to_formatted_string(self):
+        return f'Service:\
+            \nName: {self.name} \
+            \nType: {self.service_type} \
+            \nCost: $ {self.cost}\
+            \nDate: {self.appointed_to}'
+
