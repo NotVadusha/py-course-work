@@ -6,7 +6,7 @@ from UI_primitives import *
 from pymongo import *
 
 
-def create_master_window(mongo: MongoClient):
+def create_master_window(refresh, mongo: MongoClient):
     created_window = create_new_window("400x500")
     masters = mongo["classes_db"]["masters"]
 
@@ -50,6 +50,7 @@ def create_master_window(mongo: MongoClient):
                                       address_input=address, phone_num_input=phone,
                                       specialization_input=specs).to_dict())
             created_window.destroy()
+            refresh()
         except Exception as e:
             tkinter.messagebox.showerror("Пункт ксерокопії", str(e))
 

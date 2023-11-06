@@ -7,7 +7,7 @@ from UI_primitives import *
 from pymongo import *
 
 
-def create_client_window(mongo: MongoClient):
+def create_service_window(refresh, mongo: MongoClient):
     created_window = create_new_window("400x600")
     services = mongo["classes_db"]["services"]
 
@@ -49,6 +49,7 @@ def create_client_window(mongo: MongoClient):
             services.insert_one(service(service_type_input=serv_type, service_name=name,
                                         service_cost=cost, service_appointed_to=date).to_dict())
             created_window.destroy()
+            refresh()
         except TypeError:
             tkinter.messagebox.showerror("Пункт ксерокопії", "Input cost as a number")
         except Exception as e:

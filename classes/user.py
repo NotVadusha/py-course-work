@@ -11,5 +11,8 @@ class user:
         self.point_name = point_name_input
         self.phone_num = phone_num_input
 
+    def get_id(self):
+        return self.id
+
     def get_fname(self):
         return self.full_name

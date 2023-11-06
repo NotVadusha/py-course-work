@@ -3,9 +3,9 @@ from classes.user import user
 
 
 class client(user):
-    def __init__(self, full_name_input, point_name_input, phone_num_input, service, def_id=0):
+    def __init__(self, full_name_input, point_name_input, phone_num_input, service_id_inp, def_id=0):
         super().__init__(full_name_input, point_name_input, phone_num_input, def_id)
-        self.service_id = service.get_id()
+        self.service_id = service_id_inp
 
     def to_dict(self):
         return {
