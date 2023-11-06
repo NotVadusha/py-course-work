@@ -1,17 +1,17 @@
 from UI_primitives import *
 from classes.client import *
-from classes.service import *
+from pymongo import *
 
 
-def set_clients_block(window):
-    create_label(window, "Masters", 0, 0, "s")
-
+def set_clients_block(window, db: MongoClient):
     create_label(window, "Clients", 285, 0, "s")
-    a = service("11", "12", "13", "14", "15")
-    b = service("11", "12", "13", "14", "15")
-    clients_list = [client("11", "12", "13", service=a),
-                    client("21", "22", "23", service=b)]
-    create_scroll_list(window, clients_list, 345, 50, client.get_fname)
+    temp_arr = []
+    for elm in db["classes_db"]["clients"].find():
+        new_class = client(def_id=elm["_id"], full_name_input=elm["fullname"], point_name_input=elm["point_name"],
+                           service=elm["service_id"], phone_num_input=elm["phone_num"])
+        temp_arr.append(new_class)
+
+    create_scroll_list(window, temp_arr, 345, 50, client.get_fname)
     create_button(window, exit, 5, "Calibri", "+", 345, 230)
     create_button(window, exit, 5, "Calibri", "-", 420, 230)
     create_button(window, exit, 5, "Calibri", "Info", 380, 270)

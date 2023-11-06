@@ -1,11 +1,12 @@
 from UI_primitives import *
 from classes.service import *
+from pymongo import MongoClient
 
 
-def set_services_block(window, db):
+def set_services_block(window, db: MongoClient):
     create_label(window, "Services", 570, 0, "s")
     temp_arr = []
-    for elm in db.find():
+    for elm in db["classes_db"]["services"].find():
         new_class = service(def_id=elm["_id"], service_type_input=elm["service_type"], service_cost=elm["service_cost"],
                             service_name=elm["service_name"], service_appointed_to=elm["service_appointed_to"])
         temp_arr.append(new_class)
