@@ -1,6 +1,3 @@
-from UI_primitives import *
-from classes.client import *
-from pymongo import *
 from views.create_client_window import *
 from views.class_info_window import *
 
@@ -10,7 +7,7 @@ def set_clients_block(window: Frame, refresh, db: MongoClient):
     temp_arr = []
     for elm in db["classes_db"]["clients"].find():
         new_class = client(def_id=elm["_id"], full_name_input=elm["fullname"], point_name_input=elm["point_name"],
-                           service_id_inp=elm["service_id"], phone_num_input=elm["phone_num"])
+                           service_id_inp=elm["service_id"], phone_num_input=elm["phone_num"], service_to_date=elm["service_date"])
         temp_arr.append(new_class)
 
     clients_listbox = create_scroll_list(window, temp_arr, 345, 50, client.get_fname)

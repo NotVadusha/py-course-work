@@ -2,8 +2,8 @@ import uuid
 
 
 class service:
-    def __init__(self, service_type_input, service_name, service_cost, service_appointed_to, def_id=0):
-        if def_id != 0:
+    def __init__(self, service_type_input, service_name, service_cost, service_appointed_to, def_id="0"):
+        if def_id != "0":
             self.id = def_id
         else:
             self.id = uuid.uuid4()
@@ -18,6 +18,9 @@ class service:
     def get_name(self):
         return self.name
 
+    def get_date(self):
+        return self.appointed_to
+
     def to_dict(self):
         return {
             "_id": self.id,
@@ -28,9 +31,5 @@ class service:
         }
 
     def to_formatted_string(self):
-        return f'Service:\
-            \nName: {self.name} \
-            \nType: {self.service_type} \
-            \nCost: $ {self.cost}\
-            \nDate: {self.appointed_to}'
+        return f'Service:\nName: {self.name} \nType: {self.service_type} \nCost: $ {self.cost}\nDate: {self.appointed_to}'
 

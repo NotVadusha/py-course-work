@@ -1,4 +1,3 @@
-import uuid
 from classes.user import user
 
 
@@ -19,9 +18,4 @@ class master(user):
         }
 
     def to_formatted_string(self):
-        return f'Master:\
-            \nName: {self.full_name} \
-            \nPhone: {self.phone_num} \
-            \nPoint: $ {self.point_name} \
-            \n Address: {self.address} \
-           \nSpecialization: {self.specialization}'
+        return f'Master:\nName: {self.full_name}\nPhone: {self.phone_num}\nPoint: {self.point_name}\nAddress: {self.address}\nSpecialization: {self.specialization}'

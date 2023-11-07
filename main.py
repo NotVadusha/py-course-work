@@ -1,16 +1,12 @@
 import os
-import tkinter.messagebox
-from tkcalendar import Calendar
-from pymongo.mongo_client import MongoClient
 from dotenv import load_dotenv
 from views.services_list import *
 from views.clients_list import *
 from views.masters_list import *
-import datetime
 from views.class_info_window import show_obj_info_window
 from views.create_client_window import *
-from views.create_master_window import *
 from views.create_service_window import *
+from views.clients_for_date_list import show_clients_for_date
 
 
 load_dotenv()
@@ -53,29 +49,41 @@ def create_main_frame():
     set_services_block(mainWindow, refresh_frame, db)
 
     def get_clients_for_date():
-        tkinter.messagebox.showinfo("abc", cal.get_date())
-        clients_via_date = []
-        for client_obj in clients.find({"service_appointed_to": cal.get_date()}):
-            clients_via_date.append(client(*client_obj))
-        list_via_date_window = create_new_window("")
-        create_scroll_list(list_via_date_window, [], 0, 0, client.get_fname)
+        date = cal.get_date()
+        services_date_query = {"service_appointed_to": date}
+        services_to_date = services.find(services_date_query)
+        temp_arr = []
+        for service_dict in services_to_date:
+            client_dict = clients.find_one({"service_id": service_dict["_id"]})
+            if client_dict:
+                temp_arr.append(client(full_name_input=client_dict["fullname"], point_name_input=client_dict["point_name"],
+                                       phone_num_input=client_dict["phone_num"], service_id_inp=["service_id"],
+                                       service_to_date=client_dict["service_date"], def_id=client_dict["_id"]))
+        show_clients_for_date(temp_arr, date)
 
     def get_most_expensive_service():
-        tkinter.messagebox.showinfo("abc", "cal.get_date()")
+        service_dict = services.find_one(sort=[("service_cost", -1)])
+        service_to_show = service(def_id=service_dict["_id"], service_type_input=service_dict["service_type"],
+                                  service_cost=service_dict["service_cost"], service_name=service_dict["service_name"], service_appointed_to=service_dict["service_appointed_to"])
+        show_obj_info_window(service_to_show)
 
-    # "Right now, average service cost is " +
     def get_average_service_cost():
-        x = services.aggregate(
-        [{'$group': {
-            "_id": "$service_name",
-            'avg_cost': {'$avg': '$service_cost'}
-        }}])
-        print(x["avg_cost"])
-        tkinter.messagebox.showinfo("Average service", "1")
+        avg_cost = db["classes_db"]["services"].aggregate([{
+            '$group': {
+                '_id': None,
+                'avg_service_cost': {'$avg': '$service_cost'}
+            }}])
+        cost_arr = []
+        for x in avg_cost:
+            cost_arr.append(x)
+        if len(cost_arr)>0:
+            return cost_arr[0]["avg_service_cost"]
+        else:
+            return 0
 
     create_button(mainWindow, get_clients_for_date, 25, "Calibri", "Get clients for selected date", 30, 550)
-    create_button(mainWindow, get_most_expensive_service, 25, "Calibri", "Get most expensive service", 300, 450)
-    create_button(mainWindow, get_average_service_cost, 20, "Calibri", "Get average service cost", 600, 450)
+    create_button(mainWindow, get_most_expensive_service, 25, "Calibri", "Get most expensive service", 300, 350)
+    create_label(mainWindow, f"Average service cost: {get_average_service_cost()}$", 530, 350, "w")
 
 
 create_main_frame()

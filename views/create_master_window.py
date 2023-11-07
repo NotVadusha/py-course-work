@@ -1,4 +1,3 @@
-import tkinter
 import tkinter.messagebox
 
 from classes.master import *

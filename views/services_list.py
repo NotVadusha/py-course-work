@@ -1,6 +1,4 @@
-from UI_primitives import *
-from classes.service import *
-from pymongo import MongoClient
+
 from views.create_service_window import *
 from views.class_info_window import *
 

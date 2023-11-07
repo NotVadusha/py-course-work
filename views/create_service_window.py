@@ -1,4 +1,3 @@
-import tkinter
 import tkinter.messagebox
 from tkcalendar import Calendar
 
@@ -34,12 +33,19 @@ def create_service_window(refresh, mongo: MongoClient):
     def create_object():
         if name_inp.get() == "":
             tkinter.messagebox.showerror("Пункт ксерокопії", "Name field is empty")
+            return
         if type_inp.get() == "":
             tkinter.messagebox.showerror("Пункт ксерокопії", "Type field is empty")
+            return
         if cost_inp.get() == "":
             tkinter.messagebox.showerror("Пункт ксерокопії", "Cost field is empty")
+            return
         if cal.get_date() == "":
             tkinter.messagebox.showerror("Пункт ксерокопії", "Calendar field is empty")
+            return
+        if services.find({"service_name": name_inp}):
+            tkinter.messagebox.showerror("Пункт ксерокопії", "This name exists")
+            return
 
         try:
             name = name_inp.get()

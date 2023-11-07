@@ -1,6 +1,3 @@
-from UI_primitives import *
-from classes.master import master
-from pymongo import *
 from views.create_master_window import *
 from views.class_info_window import *
 
