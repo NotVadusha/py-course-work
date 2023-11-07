@@ -1,4 +1,3 @@
-# py-course-work
 
 <h1>How to set up project</h1>
 <p>Install packages:</p>
