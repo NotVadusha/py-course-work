@@ -7,4 +7,4 @@
   <li>TkCalendar</li>
 </ul>
 <p>Create .env file, create your atlas mongo database and copy uri into .env with property name MONGO_URI:\n
-MONGO_URI_www.database.com</p>
+MONGO_URI=www.database.com</p>
