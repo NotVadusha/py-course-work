@@ -4,6 +4,7 @@
 <ul>
   <li>Tkinter</li>
   <li>TkCalendar</li>
+  <li>Pymongo</li>
 </ul>
 <p>Create .env file, create your atlas mongo database and copy uri into .env with property name MONGO_URI:</p>
-<p>MONGO_URI=www.database.com</p>
+<code>MONGO_URI=www.database.com</code>
